@@ -34,9 +34,32 @@ export const login = async (req, res) => {
         if (!matchPass) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
-        const JWT_token = jwt.sign({ id: exitUser._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
-        res.status(200).json({ message: "Login Successful", JWT_token });
+        const token = jwt.sign(
+            { id: exitUser._id },
+            process.env.JWT_SECRET,
+            { expiresIn: '1d' }
+        );
+
+        return res.status(200).json({
+            message: "Login Successful",
+            token,
+            user: {
+                id: exitUser._id,
+                name: exitUser.name,
+                email: exitUser.email
+            }
+        });
     } catch (error) {
         res.status(500).json({ message: "server Error" });
+    }
+};
+
+
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+        return res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: "Server Error " });
     }
 }
