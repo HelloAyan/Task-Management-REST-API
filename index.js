@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import route from './route/userRoute.js'
 
 const app = express()
 dotenv.config()
@@ -20,6 +21,9 @@ mongoose.connect(MONGO_URL).then(() => {
 }).catch((error) => {
     console.log("Error connecting to MongoDB:", error);
 })
+
+
+app.use('/api/v1', route);
 
 app.get('/', (req, res) => {
     res.send('Task Management REST API is running');
