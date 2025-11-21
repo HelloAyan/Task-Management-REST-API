@@ -22,7 +22,6 @@ mongoose.connect(MONGO_URL).then(() => {
     console.log("Error connecting to MongoDB:", error);
 })
 
-
 app.use('/api/v1', route);
 
 app.get('/', (req, res) => {
