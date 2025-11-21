@@ -6,6 +6,9 @@ export const register = async (req, res) => {
     try {
         const userData = new User(req.body);
         const { name, email, password } = userData;
+        if (req.file) {
+            userData.profilePhoto = req.file.path;
+        }
         const exitUser = await User.findOne({ email });
         if (exitUser) {
             return res.status(400).json({ message: "User already exists" });
@@ -56,6 +59,7 @@ export const login = async (req, res) => {
 
 export const logout = (req, res) => {
     try {
+        res.clearCookie("token");
         return res.status(200).json({ message: "Logout Successful" })
     } catch (error) {
         res.status(500).json({ message: "Server Error" });

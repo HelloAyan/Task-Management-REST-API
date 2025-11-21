@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['user', "manager", "admin"],
         required: true,
+    },
+    profilePhoto: {
+        type: String,
+        default: null,
     }
 })
 export default mongoose.model("users", userSchema);
