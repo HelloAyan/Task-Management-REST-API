@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import route from './route/userRoute.js'
+import taskRoute from './route/taskRoute.js'
 
 const app = express()
 dotenv.config()
@@ -23,6 +24,7 @@ mongoose.connect(MONGO_URL).then(() => {
 })
 
 app.use('/api/v1', route);
+app.use('/api/v1', taskRoute)
 
 app.get('/', (req, res) => {
     res.send('Task Management REST API is running');
